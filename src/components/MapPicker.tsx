@@ -1,3 +1,4 @@
+// src/component/MapPicker.tsx
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import { useState, useEffect } from "react";
@@ -12,15 +13,9 @@ interface MapPickerProps {
   userToken: string;
   onSourceSelect: (coords: LatLng) => void;
   onDestinationSelect: (coords: LatLng) => void;
-  
 }
 
-export default function MapPicker({
-  
-  onSourceSelect,
-  onDestinationSelect,
-  
-}: MapPickerProps) {
+export default function MapPicker({ onSourceSelect, onDestinationSelect }: MapPickerProps) {
   const [source, setSource] = useState<LatLng | null>(null);
   const [destination, setDestination] = useState<LatLng | null>(null);
   const [selecting, setSelecting] = useState<"source" | "destination">("source");
@@ -65,7 +60,7 @@ export default function MapPicker({
 
   return (
     <div className="fixed inset-0 w-screen h-screen z-0">
-      {/* نقشه تمام صفحه */}
+      {/* Map */}
       <MapContainer
         center={[29.6, 52.5]}
         zoom={13}
@@ -78,7 +73,7 @@ export default function MapPicker({
         {destination && <Marker position={destination} icon={destinationIcon} />}
       </MapContainer>
 
-      {/* متن راهنما */}
+      
       <div className="absolute top-5 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md text-gray-800 text-sm px-4 py-2 rounded-full shadow-md z-[1000]">
         {instruction}
       </div>

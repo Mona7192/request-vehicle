@@ -1,6 +1,6 @@
 // src/types/apiTypes.ts
 
-/** 🔹 پاسخ لاگین کاربر */
+/** User login response */
 export interface LoginResponse {
   status: number;
   message: string;
@@ -9,20 +9,20 @@ export interface LoginResponse {
   };
 }
 
-/** 🔹 مدل داده خودرو */
+/** Vehicle data model */
 export interface Vehicle {
   id: string | number;
   name: string;
 }
 
-/** 🔹 پاسخ دریافت لیست خودروها */
+/** Response to receiving the list of cars */
 export interface VehicleListResponse {
   status: number;
   message: string;
   data: Vehicle[];
 }
 
-/** 🔹 ورودی درخواست سفر */
+/** Travel request input */
 export interface SendRequestParams {
   userToken: string;
   vehicleUserTypeId: string;
@@ -30,7 +30,7 @@ export interface SendRequestParams {
   destination: string;
 }
 
-/** 🔹 پاسخ ثبت درخواست سفر */
+/** Travel request registration response */
 export interface RideRequestResponse {
   status: number;
   message: string;

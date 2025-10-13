@@ -12,7 +12,7 @@ export const useLogin = () => {
   return useMutation<LoginResponse, Error, LoginInput>({
     mutationFn: async ({ username, password }) => {
       const res = await login(username, password);
-      console.log("Login Response:", res); //  برای تست خروجی
+      console.log("Login Response:", res); //  For test
       return res;
     },
   });

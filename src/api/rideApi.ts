@@ -1,39 +1,9 @@
 // src/api/rideApi.ts
 import apiClient from "./client";
-
-// انواع داده (Types)
-export interface LoginResponse {
-  status: number;
-  message: string;
-  data?: {
-    userToken: string;
-  };
-}
-
-export interface Vehicle {
-  id: string;
-  name: string;
-}
-
-export interface VehicleListResponse {
-  status: number;
-  message: string;
-  data: Vehicle[];
-}
-
-export interface RideRequestResponse {
-  status: number;
-  message: string;
-  data?: {
-    requestNo: string;
-  };
-}
+import type { LoginResponse, VehicleListResponse, RideRequestResponse } from "../types/apiTypes";
 
 // Login API
-export const login = async (
-  username: string,
-  password: string
-): Promise<LoginResponse> => {
+export const login = async (username: string, password: string): Promise<LoginResponse> => {
   try {
     const { data } = await apiClient.post("/Account/Login", {
       Username: username,
@@ -55,12 +25,9 @@ export const getVehicles = async (
   const term = searchTerm.length >= 2 ? searchTerm : "aa";
   try {
     const { data } = await apiClient.get("/Request/GetVehicleUsers", {
-      params: {
-        UserToken: userToken,
-        SearchTerm: term,
-      },
+      params: { UserToken: userToken, SearchTerm: term },
     });
-    if (import.meta.env.DEV) console.log("Vehicles API response:", data);
+    if (import.meta.env.DEV) console.log("🚗 Vehicles response:", data);
     return data;
   } catch (err: any) {
     console.error("Vehicle fetch error:", err);
@@ -68,7 +35,7 @@ export const getVehicles = async (
   }
 };
 
-// 🔹 Send Ride Request API
+// Send Ride Request API
 export const sendRideRequest = async (
   userToken: string,
   vehicleUserTypeId: string,
@@ -82,10 +49,10 @@ export const sendRideRequest = async (
       Source: source,
       Destination: destination,
     });
-    if (import.meta.env.DEV) console.log("Send Request API response:", data);
+    if (import.meta.env.DEV) console.log("Send request:", data);
     return data;
   } catch (err: any) {
-    console.error("Send Request error:", err);
+    console.error("Send request error:", err);
     throw new Error("خطا در ارسال درخواست سفر");
   }
 };

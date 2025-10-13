@@ -1,45 +1,26 @@
+// src/hooks/useSendRequest.ts
 import { useMutation } from "@tanstack/react-query";
-import { type UseMutationResult } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { sendRideRequest } from "../api/rideApi";
-import type { RideRequestResponse } from "../types/apiTypes";
+import type { RideRequestResponse, SendRequestParams } from "../types/apiTypes";
 
-export interface SendRequestParams {
-  userToken: string;
-  vehicleUserTypeId: string;
-  source: string;
-  destination: string;
-}
-
-/**
- * Hook: useSendRequest
- * مدیریت ارسال درخواست سفر
- */
-export const useSendRequest = (): UseMutationResult<
-  RideRequestResponse,
-  Error,
-  SendRequestParams
-> => {
+export const useSendRequest = () => {
   return useMutation<RideRequestResponse, Error, SendRequestParams>({
-    mutationFn: async (params) => {
-      try {
-        if (import.meta.env.DEV)
-          console.log("Sending ride request with params:", params);
+    mutationFn: useCallback(async (params: { userToken: string; vehicleUserTypeId: string; source: string; destination: string; }) => {
+      if (import.meta.env.DEV) console.log("Sending ride request:", params);
 
-        const response = await sendRideRequest(
-          params.userToken,
-          params.vehicleUserTypeId,
-          params.source,
-          params.destination
-        );
+      const response = await sendRideRequest(
+        params.userToken,
+        params.vehicleUserTypeId,
+        params.source,
+        params.destination
+      );
 
-        if (import.meta.env.DEV)
-          console.log("API Response:", response);
-
-        return response;
-      } catch (err: any) {
-        console.error("API Error:", err);
-        throw new Error("ارسال درخواست با خطا مواجه شد");
+      if (response.status !== 1) {
+        throw new Error(response.message || "ارسال درخواست ناموفق بود");
       }
-    },
+
+      return response;
+    }, []),
   });
 };
