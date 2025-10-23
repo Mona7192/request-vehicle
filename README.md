@@ -54,6 +54,9 @@ npm install
 # Start development server
 npm run dev
 ```
+###Login for test
+username:need_more_coffee
+password:996701
 
 #  Pishgaman Ride Request Test Farsi
 این پروژه برای ارزیابی فنی موقعیت Frontend Developer ساخته شده است.
